@@ -2,6 +2,36 @@ const net = require('net');
 const host = ['142.250.78.14', '157.240.6.35' ]; // google: 142.250.78.14, facebook: 157.240.6.35
 const timeout = 10000;
 
+let parte1 = 0, parte2 = 0, parte3 = 0, parte4 = 0;
+let finish = false;
+
+function generateNextIP(){
+  if (parte4 === 255) {
+    parte3++;
+  }
+
+  if (parte3 === 255) {
+    parte3 = 0;
+    parte2++;
+  }
+
+  if (parte2 === 255) {
+    parte2 = 0;
+    parte1++;
+  }
+
+  if (parte1 === 255) {
+    finish = true;
+  }
+
+  if(parte4 === 255) {
+    parte4 = 0;
+  }else{
+    parte4++;
+  }
+  return `${parte1}.${parte2}.${parte3}.${parte4}`;
+}
+
 async function startScanner(host) {
   let results = { host: host, ports: { opens: [] } };
   let start = false;
